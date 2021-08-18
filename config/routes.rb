@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'users/show'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
     #devise_for :users
 
@@ -11,7 +12,10 @@ Rails.application.routes.draw do
     get "sign_in", :to => "users/sessions#new"
     get "sign_out", :to => "users/sessions#destroy"
   end
-  resources :post_images, only: [:new, :create, :index, :show, :destroy]
+      root to: 'homes#top'
 
-    root to: 'homes#top'
-end
+    resources :post_images, only: [:new, :create, :index, :show, :destroy] do
+    resources :post_comments, only: [:create, :destroy]
+    resources :favorites, only: [:create, :destroy]
+    resources :users, only: [:show, :edit, :update]
+    end
